@@ -30,7 +30,7 @@ INCREMENTAL_COLUMN = "updated_at"
 
 # TODO: "full_refresh" -> zawsze ładuje wszystko od nowa (nadpisuje tabelę w BigQuery)
 #       "incremental"  -> ładuje tylko wiersze nowsze niż ostatnio załadowane
-LOAD_MODE = "full_refresh"
+LOAD_MODE = "incremental"
 
 # ============================================================
 # LOGIKA -- zwykle nie trzeba tego modyfikować
