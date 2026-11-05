@@ -23,14 +23,14 @@ BQ_DATASET = os.environ["BQ_DATASET"]
 BQ_TABLE = os.environ["BQ_TABLE"]
 
 # TODO: nazwa tabeli źródłowej w Neon (ta, którą wypełnialiście w Lab 1)
-SOURCE_TABLE = "test"
+SOURCE_TABLE = "shipments"
 
 # TODO: kolumna używana do wykrywania nowych/zmienionych wierszy przy incremental load
 INCREMENTAL_COLUMN = "updated_at"
 
 # TODO: "full_refresh" -> zawsze ładuje wszystko od nowa (nadpisuje tabelę w BigQuery)
 #       "incremental"  -> ładuje tylko wiersze nowsze niż ostatnio załadowane
-LOAD_MODE = "incremental"
+LOAD_MODE = "full_refresh"
 
 # ============================================================
 # LOGIKA -- zwykle nie trzeba tego modyfikować
