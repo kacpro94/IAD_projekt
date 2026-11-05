@@ -1,0 +1,40 @@
+name: Load data from Neon to BigQuery
+
+# Uruchamiane ręcznie (do testów na labie) lub wg harmonogramu
+on:
+  workflow_dispatch:      # pozwala odpalić workflow ręcznie z zakładki Actions
+  schedule:
+    - cron: '0 6 * * *'   # przykładowy harmonogram: codziennie o 6:00 UTC
+
+jobs:
+  extract-and-load:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Write GCP service account key to file
+        run: echo '${{ secrets.GCP_SA_KEY }}' > gcp-key.json
+
+      - name: Run extract and load script
+        env:
+          NEON_CONNECTION_STRING: ${{ secrets.NEON_API_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: gcp-key.json
+          # --- TODO: studenci uzupełniają poniższe trzy wartości ---
+          BQ_PROJECT_ID: inzynieria-danych
+          BQ_DATASET: lab3
+          BQ_TABLE: test
+        run: python extract_load.py
+
+      - name: Clean up key file
+        if: always()
+        run: rm -f gcp-key.json
